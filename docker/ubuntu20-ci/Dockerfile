@@ -60,14 +60,29 @@ RUN cd ~/frr && \
        --sbindir=/usr/lib/frr \
        --sysconfdir=/etc/frr \
        --enable-vtysh \
-       --enable-pimd \
-       --enable-sharpd \
-       --enable-multipath=64 \
+       --enable-fpm \
+       --enable-multipath=4 \
        --enable-user=frr \
        --enable-group=frr \
        --enable-vty-group=frrvty \
-       --enable-snmp=agentx \
        --enable-scripting \
+       --disable-ripd       \
+       --disable-ripngd     \
+       --disable-ospfd      \
+       --disable-ospf6d     \
+       --disable-ldpd       \
+       --disable-nhrpd      \
+       --disable-eigrpd     \
+       --disable-babeld     \
+       --disable-isisd      \
+       --disable-pimd       \
+       --disable-pbrd       \
+       --disable-fabricd    \
+       --disable-vrrpd      \
+       --disable-pathd      \
+       --disable-ospfapi    \
+       --disable-ospfclient \
+       --disable-bfdd       \
        --with-pkg-extra-version=-my-manual-build && \
     make -j $(nproc) && \
     sudo make install
@@ -75,4 +90,3 @@ RUN cd ~/frr && \
 RUN cd ~/frr && make check || true
 
 COPY docker/ubuntu20-ci/docker-start /usr/sbin/docker-start
-CMD ["/usr/sbin/docker-start"]

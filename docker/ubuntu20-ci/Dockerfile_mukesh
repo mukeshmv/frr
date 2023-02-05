@@ -1,0 +1,12 @@
+FROM frr-ubuntu20-fpm:latest
+
+COPY tools/etc/frr /etc/frr
+RUN sudo apt-get install -y vim
+COPY docker/ubuntu20-ci/docker-start /usr/sbin/docker-start
+
+# Own the config / PID files
+RUN sudo mkdir -p /var/run/frr
+RUN sudo chown -R frr:frr /etc/frr /var/run/frr
+COPY fpm_listen.py .
+
+CMD ["/usr/sbin/docker-start"]
